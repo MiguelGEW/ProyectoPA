@@ -59,23 +59,23 @@ class TableWithLabelsTest {
     @Test
     @DisplayName("TableWithLabels - getHeaders")
     void getHeaders() {
-        // assert if the headers are correctly read
+        // assert if the headers are correctly readTable
         assertEquals(List.of("header1", "header2", "header3", "header4", "headers5"), tableWithLabels.getHeaders());
     }
 
     @Test
     @DisplayName("TableWithLabels - getRowAt")
     void getRowAt() {
-        // assert that the first and last row are correctly read
+        // assert that the first and last row are correctly readTable
         assertEquals(List.of(0.0, 1.0, 2.0, 3.0, 4.0), tableWithLabels.getRowAt(0).getData());
         assertEquals("label1", tableWithLabels.getRowAt(0).getLabel());
         assertEquals(List.of(25.0, 26.0, 27.0, 28.0, 29.0), tableWithLabels.getRowAt(this.amountOfRows - 1).getData());
         assertEquals("label3", tableWithLabels.getRowAt(this.amountOfRows - 1).getLabel());
 
-        // assert that an arbitrary row is correctly read
+        // assert that an arbitrary row is correctly readTable
         assertEquals(List.of(10.0, 11.0, 12.0, 13.0, 14.0), tableWithLabels.getRowAt(2).getData());
         assertEquals("label3", tableWithLabels.getRowAt(2).getLabel());
-        // assert that the right amount of columns is read
+        // assert that the right amount of columns is readTable
         assertEquals(this.amountOfColumns, tableWithLabels.getRowAt(3).getData().size());
     }
 
@@ -89,7 +89,7 @@ class TableWithLabelsTest {
     @Test
     @DisplayName("TableWithLabels - getColumnAt")
     void getColumnAt() {
-        // assert that a column is correctly read
+        // assert that a column is correctly readTable
         assertEquals(List.of(0.0, 5.0, 10.0, 15.0, 20.0, 25.0), tableWithLabels.getColumnAt(0));
         // assert that a column contains the right amount of rows
         assertEquals(amountOfRows, tableWithLabels.getColumnAt(0).size());

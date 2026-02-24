@@ -53,19 +53,19 @@ class TableTest {
     @Test
     @DisplayName("Table - getHeaders")
     void getHeaders() {
-        // assert if the headers are correctly read
+        // assert if the headers are correctly readTable
         assertEquals(List.of("header1", "header2", "header3", "header4"), table.getHeaders());
     }
 
     @Test
     @DisplayName("Table - getRowAt")
     void getRowAt() {
-        // assert that the first and last row are correctly read
+        // assert that the first and last row are correctly readTable
         assertEquals(List.of(0.0, 1.0, 2.0, 3.0), table.getRowAt(0).getData());
         assertEquals(List.of(36.0, 37.0, 38.0, 39.0), table.getRowAt(this.amountOfRows - 1).getData());
-        // assert that an arbitrary row is correctly read
+        // assert that an arbitrary row is correctly readTable
         assertEquals(List.of(12.0, 13.0, 14.0, 15.0), table.getRowAt(3).getData());
-        // assert that the right amount of columns is read
+        // assert that the right amount of columns is readTable
         assertEquals(this.amountOfColumns, table.getRowAt(3).getData().size());
     }
 
@@ -78,7 +78,7 @@ class TableTest {
     @Test
     @DisplayName("Table - getColumnAt")
     void getColumnAt() {
-        // assert that a column is correctly read
+        // assert that a column is correctly readTable
         assertEquals(List.of(0.0, 4.0, 8.0, 12.0, 16.0, 20.0, 24.0, 28.0, 32.0, 36.0), table.getColumnAt(0));
         // assert that a column contains the right amount of rows
         assertEquals(amountOfRows, table.getColumnAt(0).size());
