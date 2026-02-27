@@ -5,22 +5,22 @@
 ### CSV File Reading
 
 **Implementation**
-- [ ] `CSV` class created
-  - [ ] `readTable` method
-  - [ ] `readTableWithLabels` method
-- [ ] `Table` class created
-  - [ ] `headers` attribute
-  - [ ] `getRowAt` method
+- [x] `CSV` class created
+  - [x] `readTable` method
+  - [x] `readTableWithLabels` method
+- [x] `Table` class created
+  - [x] `headers` attribute
+  - [x] `getRowAt` method
   - [ ] `getColumnAt` method
-- [ ] `TableWithLabels` class created
+- [x] `TableWithLabels` class created
   - [ ] `getRowAt` method
-  - [ ] `getLabelAsInteger` method
-- [ ] `Row` class created
-  - [ ] `data` attribute
-  - [ ] `getData` method
-- [ ] `RowWithLabels` class created
-  - [ ] `label` attribute
-  - [ ] `getLabel` method
+  - [x] `getLabelAsInteger` method
+- [x] `Row` class created
+  - [x] `data` attribute
+  - [x] `getData` method
+- [x] `RowWithLabels` class created
+  - [x] `label` attribute
+  - [x] `getLabel` method
 
 **Unit Tests**
 - [ ] `CSVTest`
