@@ -25,7 +25,8 @@
 **Unit Tests**
 - [ ] `CSVTest`
 - [ ] `TableTests`
-- [ ] `TableWithLabelsTest`
+- [ ] cTableWithLabelsTest`
 
 ### KNN (K-Nearest Neighbors)
-- [ ] Tasks to be added later...
+- [ ] `train` method
+- [ ] `estimate` method
