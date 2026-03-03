@@ -31,8 +31,8 @@
 
 **Implementation**
 - [x] `KNN` class created
-  - [ ] `train` method  
-  - [ ] `estimate` method
+  - [x] `train` method  
+  - [x] `estimate` method
 
 **Unit Tests**
 - [ ] `KNNTest`
