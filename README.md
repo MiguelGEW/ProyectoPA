@@ -30,7 +30,7 @@
 ### KNN (K-Nearest Neighbors)
 
 **Implementation**
-- [ ] `KNN` class created
+- [x] `KNN` class created
   - [ ] `train` method  
   - [ ] `estimate` method
 
