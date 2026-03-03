@@ -1,8 +1,7 @@
-/*package P.KNNandCSV;// TODO: Reemplazar por el nombre de tu paquete
+package P.KNNandCSV;// TODO: Reemplazar por el nombre de tu paquete
 
 // TODO: Reemplazar por los imports de tu proyecto
-import es.uji.scastele.csv.CSV;
-import es.uji.scastele.table.TableWithLabels;
+import P.KNNandCSV.*;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +13,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class KNNTest {
 
@@ -51,4 +52,4 @@ class KNNTest {
         // assert that points within (first 3) and without (last 3) the training dataset estimate to the expected class
         assertEquals(result, knn.estimate(sample));
     }
-}*/
+}
