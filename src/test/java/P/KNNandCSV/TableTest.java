@@ -1,8 +1,8 @@
-/*package P.KNNandCSV;// TODO: Reemplazar por el nombre de tu paquete
+package P.KNNandCSV;// TODO: Reemplazar por el nombre de tu paquete
 
 // TODO: Reemplazar por los imports de tu proyecto
-import es.uji.scastele.table.Row;
-import es.uji.scastele.table.Table;
+import P.KNNandCSV.Table;
+import P.KNNandCSV.Row;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TableTest {
 
@@ -35,13 +37,13 @@ class TableTest {
         // TODO: Descomenta/comenta la opcion que uses/no uses.
 
         //---(1) Setter y addRow---
-        table = new Table();
-        table.setHeaders(headers);
-        rows.forEach(row -> table.addRow(row));
+        //table = new Table();
+        //table.setHeaders(headers);
+        //rows.forEach(row -> table.addRow(row));
         //-------------------------
 
         //---(2) Inyeccion por constructor---
-        //table = new Table(headers, rows);
+        table = new Table(headers, rows);
         //-----------------------------------
     }
 
@@ -98,4 +100,4 @@ class TableTest {
         return rows;
     }
 
-}*/
+}

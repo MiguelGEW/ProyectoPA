@@ -13,6 +13,11 @@ public class TableWithLabels extends Table {
         this.labelsToIndex = new HashMap<>();
     }
 
+    @Override
+    public RowWithLabel getRowAt(int rowNumber) {
+        return (RowWithLabel) super.getRowAt(rowNumber);
+    }
+
     public void addRow(RowWithLabel row) {
         super.addRow(row);
 
