@@ -24,8 +24,8 @@
 
 **Unit Tests**
 - [ ] `CSVTest`
-- [ ] `TableTests`
-- [ ] `TableWithLabelsTest`
+- [X] `TableTest`
+- [X] `TableWithLabelsTest`
 
 ### KNN (K-Nearest Neighbors)
 
