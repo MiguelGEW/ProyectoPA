@@ -11,7 +11,7 @@
 - [x] `Table` class created
   - [x] `headers` attribute
   - [x] `getRowAt` method
-  - [ ] `getColumnAt` method
+  - [X] `getColumnAt` method
 - [x] `TableWithLabels` class created
   - [ ] `getRowAt` method
   - [x] `getLabelAsInteger` method
@@ -25,8 +25,13 @@
 **Unit Tests**
 - [ ] `CSVTest`
 - [ ] `TableTests`
-- [ ] cTableWithLabelsTest`
+- [ ] `TableWithLabelsTest`
 
 ### KNN (K-Nearest Neighbors)
+
+**Implementation**
 - [ ] `train` method
 - [ ] `estimate` method
+
+**Unit Tests**
+- [ ] `KNNTest`
