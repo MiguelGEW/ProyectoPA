@@ -13,7 +13,7 @@
   - [x] `getRowAt` method
   - [X] `getColumnAt` method
 - [x] `TableWithLabels` class created
-  - [ ] `getRowAt` method
+  - [X] `getRowAt` method
   - [x] `getLabelAsInteger` method
 - [x] `Row` class created
   - [x] `data` attribute
@@ -30,8 +30,9 @@
 ### KNN (K-Nearest Neighbors)
 
 **Implementation**
-- [ ] `train` method
-- [ ] `estimate` method
+- [ ] `KNN` class created
+  - [ ] `train` method  
+  - [ ] `estimate` method
 
 **Unit Tests**
 - [ ] `KNNTest`
