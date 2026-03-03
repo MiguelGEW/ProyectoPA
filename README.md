@@ -23,7 +23,7 @@
   - [x] `getLabel` method
 
 **Unit Tests**
-- [ ] `CSVTest`
+- [x] `CSVTest`
 - [X] `TableTest`
 - [X] `TableWithLabelsTest`
 
