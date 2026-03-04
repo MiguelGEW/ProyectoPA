@@ -35,4 +35,4 @@
   - [x] `estimate` method
 
 **Unit Tests**
-- [ ] `KNNTest`
+- [X] `KNNTest`
