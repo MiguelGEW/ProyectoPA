@@ -4,48 +4,44 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import static java.lang.Math.sqrt;
-import static java.lang.Math.pow;
-
 public class KNN {
 
     private TableWithLabels dataAnalysed;
 
-
     public void train(TableWithLabels data) {
-        dataAnalysed = data;
+        this.dataAnalysed = data;
     }
 
     public Integer estimate(List<Double> data) {
+        if (dataAnalysed == null) throw new IllegalStateException("Modelo no entrenado");
 
         Integer chosenClass = -1;
-        Double similarity = Double.MAX_VALUE; //We consider better a smaller value
+        double minDistance = Double.MAX_VALUE;
 
         for (int i = 0; i < dataAnalysed.getRows().size(); i++) {
 
-            Double similarityRow = EuclideanDistance(dataAnalysed.getRowAt(i).getData(), data);
-            if (similarityRow < similarity) {
-                chosenClass = i;
-                similarity = similarityRow;
+            RowWithLabel row = dataAnalysed.getRowAt(i);
+
+            double currentDistance = euclideanDistance(row.getData(), data);
+
+            if (currentDistance < minDistance) {
+                minDistance = currentDistance;
+                chosenClass = dataAnalysed.getLabelAsInteger(row.getLabel());
             }
         }
         return chosenClass;
     }
-
-
-    private Double EuclideanDistance(Collection<Double> obj1, Collection<Double> obj2) {
-
+    private Double euclideanDistance(Collection<Double> obj1, Collection<Double> obj2) {
         if (obj1.size() != obj2.size()) throw new IndexOutOfBoundsException();
 
-        Iterator<Double> itObj1 = obj1.iterator();
-        Iterator<Double> itObj2 = obj2.iterator();
-        Double squaredDifferences = 0.0;
+        Iterator<Double> it1 = obj1.iterator();
+        Iterator<Double> it2 = obj2.iterator();
+        double sum = 0.0;
 
-        while (itObj1.hasNext() && itObj2.hasNext())
-            squaredDifferences += Math.pow(itObj1.next() - itObj2.next(), 2);
-
-
-        return sqrt(squaredDifferences);
-
+        while (it1.hasNext()) {
+            double diff = it1.next() - it2.next();
+            sum += diff * diff;
+        }
+        return Math.sqrt(sum);
     }
 }
