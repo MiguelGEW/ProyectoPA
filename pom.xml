@@ -27,7 +27,7 @@
         </dependencies>
     </dependencyManagement>
 
-    <!-- TODO: Actualización de las dependencias para poder ejecutar el TestSuite -->
+
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

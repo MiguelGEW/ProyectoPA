@@ -35,9 +35,10 @@ public class KNN {
         return chosenClass;
     }
 
-    // TODO: Faltan comentarios para explicar las partes méás complejas
+
     private Double euclideanDistance(Collection<Double> obj1, Collection<Double> obj2) {
-        // TODO: Añadir mensaje explicativo en la excepción
+
+        //Se necesita la misma dimensión para poder medir las diferencias coordenada a coordenada.
         if (obj1.size() != obj2.size()) throw new IndexOutOfBoundsException();
 
         Iterator<Double> it1 = obj1.iterator();
