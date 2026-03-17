@@ -1,4 +1,4 @@
-package KNN;
+package K;
 
 import CSV.RowWithLabel;
 import CSV.TableWithLabels;

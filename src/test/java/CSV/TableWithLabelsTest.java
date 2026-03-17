@@ -1,9 +1,6 @@
 package CSV;
 
 
-import CSV.*;
-import KNN.*;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

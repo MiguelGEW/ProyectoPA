@@ -9,7 +9,7 @@ import org.junit.platform.suite.api.SuiteDisplayName;
 
 @Suite
 @SuiteDisplayName("Lanzar todos los tests")
-@SelectPackages({"CSV", "KNN"})
+@SelectPackages({"CSV", "K"})
 @IncludeClassNamePatterns(".*Test")
 public class TestSuite {
 }
