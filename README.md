@@ -36,3 +36,14 @@
 
 **Unit Tests**
 - [X] `KNNTest`
+
+
+## Assignment 2: Object-Oriented Programming. Interfaces, Generic Types, and Exceptions
+
+### Clustering with k-means
+
+### Refactoring using a generic interface
+
+### Practical application of the Algorithm interface: a recommendation system.
+
+### Definition and use of exceptions
