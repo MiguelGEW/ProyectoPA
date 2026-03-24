@@ -7,14 +7,17 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-public class KNN {
+// 1. Implementamos la interfaz genérica
+public class KNN implements Algorithm<TableWithLabels, List<Double>, Integer> {
 
     private TableWithLabels dataAnalysed;
 
+    @Override
     public void train(TableWithLabels data) {
         this.dataAnalysed = data;
     }
 
+    @Override
     public Integer estimate(List<Double> data) {
         if (dataAnalysed == null) throw new IllegalStateException("Modelo no entrenado");
 
@@ -35,9 +38,7 @@ public class KNN {
         return chosenClass;
     }
 
-
     private Double euclideanDistance(Collection<Double> obj1, Collection<Double> obj2) {
-
         //Se necesita la misma dimensión para poder medir las diferencias coordenada a coordenada.
         if (obj1.size() != obj2.size()) throw new IndexOutOfBoundsException();
 

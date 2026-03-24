@@ -1,9 +1,8 @@
-/*
-// TODO: Remplazar <nombre> por el nombre de tu paquete
-package <nombre>;
+package K;
 
-// TODO: Pon los imports especificos a tu proyecto
 
+import CSV.CSV;
+import CSV.Table;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
@@ -18,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class RecSysTest {
 
     private String separator = System.getProperty("file.separator");
-    // TODO: cambiar ruta si hace falta
-    private String songsFolder = "recommender";
+
+    private String songsFolder = "recsys/songs_files";
 
     private RecSys recSys;
     private Algorithm algorithm;
@@ -43,7 +42,6 @@ class RecSysTest {
     class KNNRecSys {
 
         @BeforeEach
-        // TODO: añadir o eliminar excepciones según tu implementación
         void setUp() throws IOException, URISyntaxException {
             trainTable = new CSV().readTableWithLabels(songsFolder + separator + "songs_train.csv");
             testTable = new CSV().readTableWithLabels(songsFolder + separator + "songs_test.csv");
@@ -51,7 +49,11 @@ class RecSysTest {
 
             algorithm = new KNN();
             recSys = new RecSys(algorithm);
-            recSys.train(trainTable);
+            try {
+                recSys.train(trainTable);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             recSys.initialise(testTable, testItemNames);
         }
 
@@ -88,7 +90,6 @@ class RecSysTest {
         private long seed = 53;
 
         @BeforeEach
-        // TODO: añadir o eliminar excepciones según tu implementación
         void setUp() throws IOException, URISyntaxException {
             trainTable = new CSV().readTableWithLabels(songsFolder + separator + "songs_train_withoutnames.csv");
             testTable = new CSV().readTableWithLabels(songsFolder + separator + "songs_test_withoutnames.csv");
@@ -96,7 +97,11 @@ class RecSysTest {
 
             algorithm = new KMeans(numClusters, numIterations, seed);
             recSys = new RecSys(algorithm);
-            recSys.train(trainTable);
+            try {
+                recSys.train(trainTable);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             recSys.initialise(testTable, testItemNames);
         }
 
@@ -136,4 +141,4 @@ class RecSysTest {
         scanner.close();
         return names;
     }
-}*/
+}

@@ -1,11 +1,7 @@
-package es.uji.matey;
+package recsys;
 
-import es.uji.matey.algorithms.Algorithm;
-import es.uji.matey.algorithms.KNN;
-import es.uji.matey.algorithms.KMeans;
-import es.uji.matey.data.CSV;
-import es.uji.matey.data.table.Table;
-import es.uji.matey.recommender.RecSys;
+import CSV.*;
+import K.*;
 
 import java.io.BufferedReader;
 import java.io.File;

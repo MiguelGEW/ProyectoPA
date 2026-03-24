@@ -1,16 +1,17 @@
-/*
+
 package K;
 
 // TODO: Pon los imports especificos a tu proyecto
-import main.java.CSV.*;
 
 
+import CSV.CSV;
 import CSV.TableWithLabels;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -63,6 +64,6 @@ class KMeansTest {
         Exception e = assertThrows(InvalidClusterNumberException.class, () -> kMeans.train(iris));
         // TODO: reemplazar getNumRows() con método equivalente, si hace falta
         System.out.println("Clusters: "+((InvalidClusterNumberException)e).getNumberOfCusters());
-        assertTrue(((InvalidClusterNumberException)e).getNumberOfCusters() > iris.getNumRows());
+        assertTrue(((InvalidClusterNumberException)e).getNumberOfCusters() > iris.getRowCount());
     }
-}*/
+}
