@@ -41,9 +41,29 @@
 ## Assignment 2: Object-Oriented Programming. Interfaces, Generic Types, and Exceptions
 
 ### Clustering with k-means
+**Implementation**
+- [x] `KMeans` class created
+  - [x] `train` method
+  - [x] `estimate` method
+     
+**Unit Tests**
+- [ ] `KMeansTest`
 
 ### Refactoring using a generic interface
+- [x] `Algorithm` interface created
+  - [ ] `KNN` class refactored
+  - [ ] `KMeans` class refactored
+
+**Unit Tests**
+- [ ] `KMeansTest`
 
 ### Practical application of the Algorithm interface: a recommendation system.
-
+- [ ] `RecSys` class created
+  - [ ] `train` method
+  - [ ] `initialise` method
+  - [ ] `recommend` method
 ### Definition and use of exceptions
+- [ ] `InvalidClusterNumber` exception created
+
+**Unit Tests**
+- [ ] `RecSysTest`
