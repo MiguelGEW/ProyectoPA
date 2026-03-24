@@ -1,9 +1,6 @@
 
 package K;
 
-// TODO: Pon los imports especificos a tu proyecto
-
-
 import CSV.CSV;
 import CSV.TableWithLabels;
 import org.junit.jupiter.api.AfterEach;
@@ -26,7 +23,7 @@ class KMeansTest {
     private long seed = 53;
 
     @BeforeEach
-    // TODO: En caso de manejar la excepción IOException en CSV, puedes eliminarla aquí
+
     void setUp() throws InvalidClusterNumberException, IOException {
         iris = new CSV().readTableWithLabels("iris.csv");
         kMeans = new KMeans(irisClusters, numIterations, seed);
@@ -62,8 +59,7 @@ class KMeansTest {
     void train_invalidClusters() {
         kMeans = new KMeans(200, numIterations, seed);
         Exception e = assertThrows(InvalidClusterNumberException.class, () -> kMeans.train(iris));
-        // TODO: reemplazar getNumRows() con método equivalente, si hace falta
-        System.out.println("Clusters: "+((InvalidClusterNumberException)e).getNumberOfCusters());
-        assertTrue(((InvalidClusterNumberException)e).getNumberOfCusters() > iris.getRowCount());
+        System.out.println("Clusters: "+((InvalidClusterNumberException)e).getNumberOfClusters());
+        assertTrue(((InvalidClusterNumberException)e).getNumberOfClusters() > iris.getRowCount());
     }
 }
