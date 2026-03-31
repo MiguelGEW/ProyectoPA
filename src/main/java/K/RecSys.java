@@ -9,13 +9,13 @@ public class RecSys {
     // Usar el tipo genérico sin especificar para que acepte tanto KNN (TableWithLabels) como KMeans (Table)
     private Algorithm algorithm;
 
-    private Table testData;
+    // Nombres y sus clases/grupos estimados
     private List<String> testItemNames;
+    private List<Integer> estimatedClasses;
 
     public RecSys(Algorithm algorithm) {
         this.algorithm = algorithm;
     }
-
 
     public void train(Table trainData) throws Exception {
         // Algoritmo inyectado (KNN o KMeans)
@@ -23,39 +23,39 @@ public class RecSys {
     }
 
     public void initialise(Table testData, List<String> testItemNames) {
-        this.testData = testData;
         this.testItemNames = testItemNames;
-    }
+        this.estimatedClasses = new ArrayList<>();
 
+        for (int i = 0; i < testData.getRowCount(); i++) {
+            List<Double> rowData = testData.getRowAt(i).getData();
+            Integer estimatedClass = (Integer) algorithm.estimate(rowData);
+            this.estimatedClasses.add(estimatedClass);
+        }
+    }
 
     public List<String> recommend(String nameLikedItem, int numRecommendations) throws LikedItemNotFoundException {
 
-        // Elemento que le gusta al usuario
+        // Buscar el elemento que le gusta al usuario
         int itemIndex = testItemNames.indexOf(nameLikedItem);
 
         if (itemIndex == -1) {
             throw new LikedItemNotFoundException(nameLikedItem);
         }
 
-        // Los datos del ítem
-        List<Double> likedItemData = testData.getRowAt(itemIndex).getData();
-        Integer likedItemClass = (Integer) algorithm.estimate(likedItemData);
+        // Obtener la clase/grupo del ítem
+        Integer likedItemClass = estimatedClasses.get(itemIndex);
 
-        // Otros qu pertenezcan al mismo grupo
+        // Buscar otros elementos
         List<String> recommendations = new ArrayList<>();
 
-        for (int i = 0; i < testData.getRowCount(); i++) {
+        for (int i = 0; i < estimatedClasses.size(); i++) {
 
             if (i == itemIndex) {
                 continue;
             }
 
-            //Grupo del ítem
-            List<Double> currentItemData = testData.getRowAt(i).getData();
-            Integer currentItemClass = (Integer) algorithm.estimate(currentItemData);
-
-            // Si coincide con el grupo del elemento que nos gusta
-            if (currentItemClass.equals(likedItemClass)) {
+            // Si la clase precalculada coincide con la clase del elemento que nos gusta
+            if (estimatedClasses.get(i).equals(likedItemClass)) {
                 recommendations.add(testItemNames.get(i));
 
                 if (recommendations.size() == numRecommendations) {
