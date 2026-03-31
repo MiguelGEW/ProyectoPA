@@ -11,7 +11,7 @@ public class InvalidClusterNumberException extends Exception {
         this.totalDataSize = totalDataSize;
     }
 
-
+    //Getters útiles
     public int getNumberOfClusters() {
         return numberOfClusters;
     }

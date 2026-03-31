@@ -16,12 +16,11 @@ public class KMeans implements Algorithm<Table, List<Double>, Integer>{
         this.centroids = new ArrayList<>();
     }
 
-    // Añadimos throws InvalidClusterNumberException a la firma
     @Override
     public void train(Table datos) throws InvalidClusterNumberException {
         List<Row> rows = datos.getRows();
 
-        // Comprobamos la condición y lanzamos excepción
+        // Comprobar la condición y lanzar excepción
         if (numClusters > rows.size()) {
             throw new InvalidClusterNumberException(numClusters, rows.size());
         }

@@ -9,7 +9,7 @@ public class LikedItemNotFoundException extends Exception {
         this.nameLikedItem = nameLikedItem;
     }
 
-    // Method para recuperar el nombre inválido, tal y como pide el guión
+    // Method para recuperar el nombre inválido
     public String getNameLikedItem() {
         return nameLikedItem;
     }

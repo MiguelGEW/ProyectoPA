@@ -47,23 +47,24 @@
   - [x] `estimate` method
      
 **Unit Tests**
-- [ ] `KMeansTest`
+- [x] `KMeansTest`
 
 ### Refactoring using a generic interface
 - [x] `Algorithm` interface created
-  - [ ] `KNN` class refactored
-  - [ ] `KMeans` class refactored
+  - [x] `KNN` class refactored
+  - [x] `KMeans` class refactored
 
 **Unit Tests**
-- [ ] `KMeansTest`
+- [x] `KMeansTest`
 
 ### Practical application of the Algorithm interface: a recommendation system.
-- [ ] `RecSys` class created
-  - [ ] `train` method
-  - [ ] `initialise` method
-  - [ ] `recommend` method
+- [x] `RecSys` class created
+  - [x] `train` method
+  - [x] `initialise` method
+  - [x] `recommend` method
 ### Definition and use of exceptions
-- [ ] `InvalidClusterNumber` exception created
+- [x] `InvalidClusterNumber` exception created
+- [x] `LikedItemNotFoundException` exception created
 
 **Unit Tests**
-- [ ] `RecSysTest`
+- [x] `RecSysTest`
