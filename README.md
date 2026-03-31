@@ -50,6 +50,7 @@
 - [x] `KMeansTest`
 
 ### Refactoring using a generic interface
+**Implementation**
 - [x] `Algorithm` interface created
   - [x] `KNN` class refactored
   - [x] `KMeans` class refactored
@@ -58,11 +59,13 @@
 - [x] `KMeansTest`
 
 ### Practical application of the Algorithm interface: a recommendation system.
+**Implementation**
 - [x] `RecSys` class created
   - [x] `train` method
   - [x] `initialise` method
   - [x] `recommend` method
 ### Definition and use of exceptions
+**Implementation**
 - [x] `InvalidClusterNumber` exception created
 - [x] `LikedItemNotFoundException` exception created
 
