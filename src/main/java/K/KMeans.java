@@ -2,6 +2,7 @@ package K;
 
 import CSV.*;
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class KMeans implements Algorithm<Table, List<Double>, Integer>{
 
@@ -81,16 +82,9 @@ public class KMeans implements Algorithm<Table, List<Double>, Integer>{
     }
     @Override
     public Integer estimate(List<Double> dato) {
-        int bestCluster = -1;
-        double minDistance = Double.MAX_VALUE;
-
-        for (int k = 0; k < numClusters; k++) {
-            double dist = calcularDistancia(dato, centroids.get(k));
-            if (dist < minDistance) {
-                minDistance = dist;
-                bestCluster = k;
-            }
-        }
-        return bestCluster;
+        return IntStream.range(0, numClusters)
+                .reduce((k1, k2) -> calcularDistancia(dato, centroids.get(k1)) < calcularDistancia(dato, centroids.get(k2))
+                                                                                  ? k1 : k2)
+                .orElse(-1);
     }
 }
