@@ -1,11 +1,10 @@
 package K;
 
+import CSV.Row;
 import CSV.RowWithLabel;
 import CSV.TableWithLabels;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 // 1. Implementamos la interfaz genérica
 public class KNN implements Algorithm<TableWithLabels, List<Double>, Integer> {
@@ -22,19 +21,17 @@ public class KNN implements Algorithm<TableWithLabels, List<Double>, Integer> {
         if (dataAnalysed == null) throw new IllegalStateException("Modelo no entrenado");
 
         Integer chosenClass = -1;
-        double minDistance = Double.MAX_VALUE;
 
-        for (int i = 0; i < dataAnalysed.getRows().size(); i++) {
+        Optional<Row> row = dataAnalysed.getRows().stream()
+                .min(Comparator.comparing(v -> euclideanDistance(v.getData(),data)));
 
-            RowWithLabel row = dataAnalysed.getRowAt(i);
 
-            double currentDistance = euclideanDistance(row.getData(), data);
-
-            if (currentDistance < minDistance) {
-                minDistance = currentDistance;
-                chosenClass = dataAnalysed.getLabelAsInteger(row.getLabel());
-            }
+        if (row.isPresent()) {
+            //Aquí hacemos un cast porque sabemos que en TableWithLabels solo trabajamos con RowWithLabel
+            RowWithLabel chosenRow = (RowWithLabel) row.get();
+            chosenClass = dataAnalysed.getLabelAsInteger(chosenRow.getLabel());
         }
+
         return chosenClass;
     }
 

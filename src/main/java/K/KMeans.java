@@ -2,6 +2,7 @@ package K;
 
 import CSV.*;
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class KMeans implements Algorithm<Table, List<Double>, Integer>{
 
@@ -29,6 +30,7 @@ public class KMeans implements Algorithm<Table, List<Double>, Integer>{
         List<Row> shuffledRows = new ArrayList<>(rows);
         Collections.shuffle(shuffledRows, random);
 
+        // Se asignan los nuevos representantes
         this.centroids = new ArrayList<>();
         for (int i = 0; i < numClusters; i++) {
             this.centroids.add(new ArrayList<>(shuffledRows.get(i).getData()));
@@ -36,15 +38,17 @@ public class KMeans implements Algorithm<Table, List<Double>, Integer>{
 
         for (int iter = 0; iter < numIterations; iter++) {
             List<List<Row>> clusters = new ArrayList<>();
+            // Se vacían los clusters para volver a evaluar según los nuevos representantes
             for (int k = 0; k < numClusters; k++) {
                 clusters.add(new ArrayList<>());
             }
-
+            // Se clasifican los datos en los distintos clusters
             for (Row row : rows) {
                 int clusterIndex = estimate(row.getData());
                 clusters.get(clusterIndex).add(row);
             }
 
+            // Se vuelve a reevalúar los representantes por cluster por el cálculo del centroide
             for (int k = 0; k < numClusters; k++) {
                 if (!clusters.get(k).isEmpty()) {
                     this.centroids.set(k, calcularCentroide(clusters.get(k)));
@@ -54,7 +58,11 @@ public class KMeans implements Algorithm<Table, List<Double>, Integer>{
     }
 
     private List<Double> calcularCentroide(List<Row> cluster) {
-        int dimensions = cluster.get(0).getData().size();
+
+        if (cluster.isEmpty())
+            throw new IllegalArgumentException();
+
+        int dimensions = cluster.getFirst().getData().size();
         List<Double> centroid = new ArrayList<>(Collections.nCopies(dimensions, 0.0));
 
         for (Row row : cluster) {
@@ -72,25 +80,22 @@ public class KMeans implements Algorithm<Table, List<Double>, Integer>{
     }
 
     private double calcularDistancia(List<Double> p1, List<Double> p2) {
-        double sum = 0.0;
-        for (int i = 0; i < p1.size(); i++) {
-            double diff = p1.get(i) - p2.get(i);
-            sum += diff * diff;
-        }
+
+
+        if (p1.size() != p2.size())
+            throw new IndexOutOfBoundsException();
+
+        double sum = IntStream.range(0, p1.size())
+                .mapToDouble(i -> Math.pow(p1.get(i) - p2.get(i),2 ) )
+                .sum();
+
         return Math.sqrt(sum);
     }
     @Override
     public Integer estimate(List<Double> dato) {
-        int bestCluster = -1;
-        double minDistance = Double.MAX_VALUE;
-
-        for (int k = 0; k < numClusters; k++) {
-            double dist = calcularDistancia(dato, centroids.get(k));
-            if (dist < minDistance) {
-                minDistance = dist;
-                bestCluster = k;
-            }
-        }
-        return bestCluster;
+        return IntStream.range(0, numClusters)
+                .reduce((k1, k2) -> calcularDistancia(dato, centroids.get(k1)) < calcularDistancia(dato, centroids.get(k2))
+                                                                                  ? k1 : k2)
+                .orElse(-1);
     }
 }
