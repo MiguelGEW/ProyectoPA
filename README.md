@@ -71,3 +71,10 @@
 
 **Unit Tests**
 - [x] `RecSysTest`
+
+
+## Assignment 2: Design patterns
+
+### Strategy design pattern
+
+### Design pattern Template method
