@@ -8,11 +8,4 @@ public class LikedItemNotFoundException extends Exception {
         super("El elemento que ha gustado al usuario no existe: " + nameLikedItem);
         this.nameLikedItem = nameLikedItem;
     }
-
-    // Method para recuperar el nombre inválido
-    // TODO: Eliminar todo el código temporal o que no se usa
-    // Method para recuperar el nombre inválido
-    public String getNameLikedItem() {
-        return nameLikedItem;
-    }
 }

@@ -17,9 +17,6 @@ public class KMeans implements Algorithm<Table, List<Double>, Integer>{
         this.centroids = new ArrayList<>();
     }
 
-    // TODO: El método es largo y concentra diferentes tareas (inicialización, asignación y recálculo)
-    // TODO: Se recomienda crear métodos auxiliares separados según la fase del algoritmo
-
     @Override
     public void train(Table datos) throws InvalidClusterNumberException {
         List<Row> rows = datos.getRows();
@@ -29,15 +26,7 @@ public class KMeans implements Algorithm<Table, List<Double>, Integer>{
             throw new InvalidClusterNumberException(numClusters, rows.size());
         }
 
-        Random random = new Random(seed);
-        List<Row> shuffledRows = new ArrayList<>(rows);
-        Collections.shuffle(shuffledRows, random);
-
-        // Se asignan los nuevos representantes
-        this.centroids = new ArrayList<>();
-        for (int i = 0; i < numClusters; i++) {
-            this.centroids.add(new ArrayList<>(shuffledRows.get(i).getData()));
-        }
+        initializeRepresentatives(rows);
 
         for (int iter = 0; iter < numIterations; iter++) {
             List<List<Row>> clusters = new ArrayList<>();
@@ -52,15 +41,31 @@ public class KMeans implements Algorithm<Table, List<Double>, Integer>{
             }
 
             // Se vuelve a reevalúar los representantes por cluster por el cálculo del centroide
-            for (int k = 0; k < numClusters; k++) {
-                if (!clusters.get(k).isEmpty()) {
-                    this.centroids.set(k, calcularCentroide(clusters.get(k)));
-                }
+            recalculateRepresentantives(clusters);
+        }
+    }
+
+    private void initializeRepresentatives(List<Row> rows) {
+        Random random = new Random(seed);
+        List<Row> shuffledRows = new ArrayList<>(rows);
+        Collections.shuffle(shuffledRows, random);
+
+        // Se asignan los nuevos representantes
+        this.centroids = new ArrayList<>();
+        for (int i = 0; i < numClusters; i++) {
+            this.centroids.add(new ArrayList<>(shuffledRows.get(i).getData()));
+        }
+    }
+
+    private void recalculateRepresentantives(List<List<Row>> clusters) {
+        for (int k = 0; k < numClusters; k++) {
+            if (!clusters.get(k).isEmpty()) {
+                this.centroids.set(k, computeCentroid(clusters.get(k)));
             }
         }
     }
 
-    private List<Double> calcularCentroide(List<Row> cluster) {
+    private List<Double> computeCentroid(List<Row> cluster) {
 
         if (cluster.isEmpty())
             throw new IllegalArgumentException();
@@ -82,11 +87,10 @@ public class KMeans implements Algorithm<Table, List<Double>, Integer>{
         return centroid;
     }
 
-    private double calcularDistancia(List<Double> p1, List<Double> p2) {
+    private double computeDistance(List<Double> p1, List<Double> p2) {
 
 
-        if (p1.size() != p2.size())
-            throw new IndexOutOfBoundsException();
+        if (p1.size() != p2.size()) throw new IllegalArgumentException("Los dos vectores no tienen el mismo tamaño.");
 
         double sum = IntStream.range(0, p1.size())
                 .mapToDouble(i -> Math.pow(p1.get(i) - p2.get(i),2 ) )
@@ -94,15 +98,17 @@ public class KMeans implements Algorithm<Table, List<Double>, Integer>{
 
         return Math.sqrt(sum);
     }
-
-    // TODO: Asume que el modelo ya está entrenado y que hay centroides válidos
-    // TODO: Por lo tanto, si se llama antes de llamar a train, dará un error sin mostrar
-    // un mensaje claro de a que se debe el error
-    // TODO: Se recomienda establecer una precondición de entrenamiento
+    
     @Override
     public Integer estimate(List<Double> dato) {
+
+        boolean notTrained = centroids.isEmpty();
+
+        if (notTrained)
+            throw new IllegalStateException("Modelo no ha sido entrenado. Usar método train() para entrenarlo.");
+
         return IntStream.range(0, numClusters)
-                .reduce((k1, k2) -> calcularDistancia(dato, centroids.get(k1)) < calcularDistancia(dato, centroids.get(k2))
+                .reduce((k1, k2) -> computeDistance(dato, centroids.get(k1)) < computeDistance(dato, centroids.get(k2))
                                                                                   ? k1 : k2)
                 .orElse(-1);
     }

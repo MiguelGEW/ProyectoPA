@@ -73,7 +73,7 @@
 - [x] `RecSysTest`
 
 
-## Assignment 2: Design patterns
+## Assignment 3: Design patterns
 
 ### Strategy design pattern
 

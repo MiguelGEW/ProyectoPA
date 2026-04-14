@@ -5,35 +5,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecSys {
-    // TODO: Usais algorithm en crudo y así podeis perder la seguridad de los tipos
-    // TODO: Para evitarlo podriais usar tipos genéricos de Algorithm para evitar cast durante la ejecución
+
     // Usar el tipo genérico sin especificar para que acepte tanto KNN (TableWithLabels) como KMeans (Table)
-    private Algorithm algorithm;
+    private Algorithm<Table,List<Double>,Integer> algorithm;
 
     // Nombres y sus clases/grupos estimados
     private List<String> testItemNames;
     private List<Integer> estimatedClasses;
 
-    public RecSys(Algorithm algorithm) {
+    public RecSys(Algorithm<Table,List<Double>,Integer>  algorithm) {
         this.algorithm = algorithm;
     }
 
-    // TODO: La excepción es demasiado amplia y dificulta detectar errores
-    // TODO: Para mejorar la calidad deberias usar una excepción más concreta
-    public void train(Table trainData) throws Exception {
+    public void train(Table trainData) throws InvalidClusterNumberException {
         // Algoritmo inyectado (KNN o KMeans)
         algorithm.train(trainData);
     }
-    // TODO: No valida que testData y testItemNames tengan el mismo tamaño
-    // TODO: En el guión se indica que la correspondencia entre posiciones debe ser la misma en ambos
-    // TODO: Para evitar errores deberíais hacer una comprobación antes
+
     public void initialise(Table testData, List<String> testItemNames) {
+
+        if (testData.getRows().size() != testItemNames.size())
+            throw new IllegalArgumentException("no coincide el número de datos y sus etiquetas");
         this.testItemNames = testItemNames;
         this.estimatedClasses = new ArrayList<>();
 
         for (int i = 0; i < testData.getRowCount(); i++) {
             List<Double> rowData = testData.getRowAt(i).getData();
-            Integer estimatedClass = (Integer) algorithm.estimate(rowData);
+            Integer estimatedClass =  algorithm.estimate(rowData);
             this.estimatedClasses.add(estimatedClass);
         }
     }

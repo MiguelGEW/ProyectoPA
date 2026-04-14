@@ -9,14 +9,12 @@ import CSV.Table;
  * @param <V> Tipo del valor devuelto en la estimación
  */
 
-// TODO: La excepción es demasiado amplia y dificulta detectar errores
-// TODO: Para mejorar la calidad deberias usar una excepción más concreta
 // El method train puede lanzar excepciones concretas de los algoritmos
 
 public interface Algorithm<T extends Table, U, V> {
 
     // El method train puede lanzar excepciones concretas de los algoritmos
-    void train(T datos) throws Exception;
+    void train(T datos) throws InvalidClusterNumberException;
 
     V estimate(U dato);
 }
