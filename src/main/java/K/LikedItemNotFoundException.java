@@ -10,6 +10,8 @@ public class LikedItemNotFoundException extends Exception {
     }
 
     // Method para recuperar el nombre inválido
+    // TODO: Eliminar todo el código temporal o que no se usa
+    // Method para recuperar el nombre inválido
     public String getNameLikedItem() {
         return nameLikedItem;
     }

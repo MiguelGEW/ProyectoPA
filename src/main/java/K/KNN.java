@@ -37,6 +37,9 @@ public class KNN implements Algorithm<TableWithLabels, List<Double>, Integer> {
 
     private Double euclideanDistance(Collection<Double> obj1, Collection<Double> obj2) {
         //Se necesita la misma dimensión para poder medir las diferencias coordenada a coordenada.
+        // TODO: Semánticamente no se trata de un 'índice fuera de rango', sino de un argumento inválido
+        // TODO: Se recomienda usar una excepción que indique que es una "entrada inválida" o un mensaje indicando las dimensiones esperadas / recibidas
+        //Se necesita la misma dimensión para poder medir las diferencias coordenada a coordenada.
         if (obj1.size() != obj2.size()) throw new IndexOutOfBoundsException();
 
         Iterator<Double> it1 = obj1.iterator();

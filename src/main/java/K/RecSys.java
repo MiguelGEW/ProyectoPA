@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecSys {
-
+    // TODO: Usais algorithm en crudo y así podeis perder la seguridad de los tipos
+    // TODO: Para evitarlo podriais usar tipos genéricos de Algorithm para evitar cast durante la ejecución
     // Usar el tipo genérico sin especificar para que acepte tanto KNN (TableWithLabels) como KMeans (Table)
     private Algorithm algorithm;
 
@@ -17,11 +18,15 @@ public class RecSys {
         this.algorithm = algorithm;
     }
 
+    // TODO: La excepción es demasiado amplia y dificulta detectar errores
+    // TODO: Para mejorar la calidad deberias usar una excepción más concreta
     public void train(Table trainData) throws Exception {
         // Algoritmo inyectado (KNN o KMeans)
         algorithm.train(trainData);
     }
-
+    // TODO: No valida que testData y testItemNames tengan el mismo tamaño
+    // TODO: En el guión se indica que la correspondencia entre posiciones debe ser la misma en ambos
+    // TODO: Para evitar errores deberíais hacer una comprobación antes
     public void initialise(Table testData, List<String> testItemNames) {
         this.testItemNames = testItemNames;
         this.estimatedClasses = new ArrayList<>();

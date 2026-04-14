@@ -16,6 +16,7 @@ public class InvalidClusterNumberException extends Exception {
         return numberOfClusters;
     }
 
+    // TODO: Eliminar todo el código temporal o que no se usa
     public int getTotalDataSize() {
         return totalDataSize;
     }

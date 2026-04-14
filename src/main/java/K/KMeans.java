@@ -17,6 +17,9 @@ public class KMeans implements Algorithm<Table, List<Double>, Integer>{
         this.centroids = new ArrayList<>();
     }
 
+    // TODO: El método es largo y concentra diferentes tareas (inicialización, asignación y recálculo)
+    // TODO: Se recomienda crear métodos auxiliares separados según la fase del algoritmo
+
     @Override
     public void train(Table datos) throws InvalidClusterNumberException {
         List<Row> rows = datos.getRows();
@@ -91,6 +94,11 @@ public class KMeans implements Algorithm<Table, List<Double>, Integer>{
 
         return Math.sqrt(sum);
     }
+
+    // TODO: Asume que el modelo ya está entrenado y que hay centroides válidos
+    // TODO: Por lo tanto, si se llama antes de llamar a train, dará un error sin mostrar
+    // un mensaje claro de a que se debe el error
+    // TODO: Se recomienda establecer una precondición de entrenamiento
     @Override
     public Integer estimate(List<Double> dato) {
         return IntStream.range(0, numClusters)
