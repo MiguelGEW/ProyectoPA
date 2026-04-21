@@ -1,9 +1,6 @@
-/*package Reader;// TODO: Remplazar <nombre> por el nombre de tu paquete
+package Reader;
 
-<nombre>;
-
-// TODO: Pon los imports especificos a tu proyecto
-
+import Matrix.TableWithLabels;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,4 +46,4 @@ class CSVLabeledFileReaderTest {
         assertEquals(List.of(5.6,3.0,4.5,1.5), table.getRowAt(66).getData());
         assertEquals("Iris-versicolor", table.getRowAt(66).getLabel());
     }
-}*/
+}

@@ -1,9 +1,7 @@
-/*package Reader;// TODO: Remplazar <nombre> por el nombre de tu paquete
+package Reader;
 
-<nombre>;
 
-// TODO: Pon los imports especificos a tu proyecto
-
+import Matrix.Table;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,4 +46,4 @@ class CSVUnlabeledFileReaderTest {
         // assert that an arbitrary row is correctly read
         assertEquals(List.of(3852.0,4801.0), table.getRowAt(16).getData());
     }
-}*/
+}

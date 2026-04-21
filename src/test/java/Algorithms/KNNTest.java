@@ -1,6 +1,6 @@
 package Algorithms;
 
-import CSV.*;
+import Reader.*;
 
 import Matrix.TableWithLabels;
 import Metrics.EuclideanDistance;

@@ -1,7 +1,7 @@
 
 package Algorithms;
 
-import CSV.CSV;
+import Reader.CSV;
 import Matrix.TableWithLabels;
 import Metrics.EuclideanDistance;
 import org.junit.jupiter.api.AfterEach;

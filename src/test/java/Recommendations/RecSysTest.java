@@ -2,7 +2,7 @@ package Recommendations;
 
 
 import Algorithms.*;
-import CSV.CSV;
+import Reader.CSV;
 import Matrix.Table;
 import Metrics.EuclideanDistance;
 import org.junit.jupiter.api.*;

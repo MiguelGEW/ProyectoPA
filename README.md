@@ -2,10 +2,10 @@
 
 ## Assignment 1: Object-Oriented Programming. Inheritance and Interfaces.
 
-### CSV File Reading
+### Reader File Reading
 
 **Implementation**
-- [x] `CSV` class created
+- [x] `Reader` class created
   - [x] `readTable` method
   - [x] `readTableWithLabels` method
 - [x] `Table` class created
