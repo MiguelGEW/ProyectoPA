@@ -1,6 +1,7 @@
-package K;
+package Recommendations;
 
-import CSV.Table;
+import Algorithms.*;
+import Matrix.Table;
 import java.util.ArrayList;
 import java.util.List;
 

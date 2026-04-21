@@ -1,8 +1,10 @@
-package K;
+package Recommendations;
 
 
+import Algorithms.*;
 import CSV.CSV;
-import CSV.Table;
+import Matrix.Table;
+import Metrics.EuclideanDistance;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
@@ -47,7 +49,7 @@ class RecSysTest {
             testTable = new CSV().readTableWithLabels(songsFolder + separator + "songs_test.csv");
             testItemNames = readNames(songsFolder + separator + "songs_test_names.csv");
 
-            algorithm = new KNN();
+            algorithm = new KNN(new EuclideanDistance());
             recSys = new RecSys(algorithm);
             try {
                 recSys.train(trainTable);
@@ -95,7 +97,7 @@ class RecSysTest {
             testTable = new CSV().readTableWithLabels(songsFolder + separator + "songs_test_withoutnames.csv");
             testItemNames = readNames(songsFolder + separator + "songs_test_names.csv");
 
-            algorithm = new KMeans(numClusters, numIterations, seed);
+            algorithm = new KMeans(numClusters, numIterations, seed, new EuclideanDistance());
             recSys = new RecSys(algorithm);
             try {
                 recSys.train(trainTable);

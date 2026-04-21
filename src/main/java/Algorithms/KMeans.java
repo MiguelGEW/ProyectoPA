@@ -1,6 +1,9 @@
-package K;
+package Algorithms;
 
-import CSV.*;
+import Matrix.Row;
+import Matrix.Table;
+import Metrics.Distance;
+
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -9,12 +12,14 @@ public class KMeans implements Algorithm<Table, List<Double>, Integer>{
     private int numClusters, numIterations;
     private long seed;
     private List<List<Double>> centroids;
+    Distance distance;
 
-    public KMeans(int numClusters, int numIterations, long seed) {
+    public KMeans(int numClusters, int numIterations, long seed, Distance distance) {
         this.numClusters = numClusters;
         this.numIterations = numIterations;
         this.seed = seed;
         this.centroids = new ArrayList<>();
+        this.distance=distance;
     }
 
     @Override
@@ -89,14 +94,7 @@ public class KMeans implements Algorithm<Table, List<Double>, Integer>{
 
     private double computeDistance(List<Double> p1, List<Double> p2) {
 
-
-        if (p1.size() != p2.size()) throw new IllegalArgumentException("Los dos vectores no tienen el mismo tamaño.");
-
-        double sum = IntStream.range(0, p1.size())
-                .mapToDouble(i -> Math.pow(p1.get(i) - p2.get(i),2 ) )
-                .sum();
-
-        return Math.sqrt(sum);
+        return distance.calculateDistance(p1, p2);
     }
     
     @Override

@@ -1,8 +1,9 @@
 
-package K;
+package Algorithms;
 
 import CSV.CSV;
-import CSV.TableWithLabels;
+import Matrix.TableWithLabels;
+import Metrics.EuclideanDistance;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +27,7 @@ class KMeansTest {
 
     void setUp() throws InvalidClusterNumberException, IOException {
         iris = new CSV().readTableWithLabels("iris.csv");
-        kMeans = new KMeans(irisClusters, numIterations, seed);
+        kMeans = new KMeans(irisClusters, numIterations, seed, new EuclideanDistance());
         kMeans.train(iris);
     }
 
@@ -57,7 +58,7 @@ class KMeansTest {
     @Test
     @DisplayName("KMeans train - more clusters than samples")
     void train_invalidClusters() {
-        kMeans = new KMeans(200, numIterations, seed);
+        kMeans = new KMeans(200, numIterations, seed, new EuclideanDistance());
         Exception e = assertThrows(InvalidClusterNumberException.class, () -> kMeans.train(iris));
         System.out.println("Clusters: "+((InvalidClusterNumberException)e).getNumberOfClusters());
         assertTrue(((InvalidClusterNumberException)e).getNumberOfClusters() > iris.getRowCount());

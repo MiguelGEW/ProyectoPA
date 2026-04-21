@@ -1,11 +1,12 @@
 package recsys;
 
+import Algorithms.Algorithm;
 import CSV.*;
-import K.*;
+import Matrix.Table;
+import Metrics.EuclideanDistance;
+import Recommendations.*;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -26,8 +27,8 @@ class SongRecSys {
 
         // Algorithms
         Map<String, Algorithm> algorithms = new HashMap<>();
-        algorithms.put("knn",new KNN());
-        algorithms.put("kmeans",new KMeans(15, 200, 4321));
+        algorithms.put("knn",new KNN(new EuclideanDistance()));
+        algorithms.put("kmeans",new KMeans(15, 200, 4321, new EuclideanDistance()));
 
         // Tables
         Map<String, Table> tables = new HashMap<>();

@@ -1,4 +1,4 @@
-package K;
+package Algorithms;
 
 public class InvalidClusterNumberException extends Exception {
 

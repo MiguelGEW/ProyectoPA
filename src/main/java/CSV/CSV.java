@@ -1,5 +1,10 @@
 package CSV;
 
+import Matrix.Row;
+import Matrix.RowWithLabel;
+import Matrix.Table;
+import Matrix.TableWithLabels;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

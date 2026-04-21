@@ -1,4 +1,4 @@
-package K;
+package Algorithms;
 
 public class LikedItemNotFoundException extends Exception {
 

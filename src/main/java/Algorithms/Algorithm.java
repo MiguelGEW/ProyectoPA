@@ -1,6 +1,6 @@
-package K;
+package Algorithms;
 
-import CSV.Table;
+import Matrix.Table;
 
 /**
  * Interfaz genérica para los algoritmos de Machine Learning.

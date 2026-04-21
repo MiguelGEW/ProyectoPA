@@ -27,7 +27,7 @@
 - [X] `TableTest`
 - [X] `TableWithLabelsTest`
 
-### KNN (K-Nearest Neighbors)
+### KNN (Recommendations-Nearest Neighbors)
 
 **Implementation**
 - [x] `KNN` class created
@@ -51,14 +51,14 @@
 
 ### Refactoring using a generic interface
 **Implementation**
-- [x] `Algorithm` interface created
+- [x] `Algorithms` interface created
   - [x] `KNN` class refactored
   - [x] `KMeans` class refactored
 
 **Unit Tests**
 - [x] `KMeansTest`
 
-### Practical application of the Algorithm interface: a recommendation system.
+### Practical application of the Algorithms interface: a recommendation system.
 **Implementation**
 - [x] `RecSys` class created
   - [x] `train` method
