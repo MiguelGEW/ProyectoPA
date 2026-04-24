@@ -23,7 +23,7 @@ class KNNTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        TableWithLabels iris = new CSV().readTableWithLabels("iris.csv");
+        TableWithLabels iris = new CSVLabeledFileReader("iris.csv").readTableFromSource();
         knn = new KNN(new EuclideanDistance());
         knn.train(iris);
     }

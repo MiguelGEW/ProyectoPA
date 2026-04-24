@@ -19,7 +19,7 @@ public class KMeans implements Algorithm<Table, List<Double>, Integer>{
         this.numIterations = numIterations;
         this.seed = seed;
         this.centroids = new ArrayList<>();
-        this.distance=distance;
+        this.distance = distance;
     }
 
     @Override

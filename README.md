@@ -75,6 +75,27 @@
 
 ## Assignment 3: Design patterns
 
+### Existing design pattern detection
+
+- [X] Design patter detected (Strategy)
+- [X] UML pdf diagram created
+
 ### Strategy design pattern
+**Implementation**
+- [X] `Distance` interface created
+- [X] `EuclideanDistance` implementation created
+- [X] `ManhattanDistance` implementation created
+
+**Unit Tests**
+- [X] `EuclideanDistanceTest`
+- [X] `ManhattanDistanceTest`
 
 ### Design pattern Template method
+**Implementation**
+- [X] `ReaderTemplate` abstract class created
+- [X] `FileReader` abstract class created
+- [X] `CSV` class deleted
+- [X] `CSV` dependencies solved
+
+**Unit Tests**
+-[X] `TestSuite`

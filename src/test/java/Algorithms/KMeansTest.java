@@ -1,9 +1,10 @@
 
 package Algorithms;
 
-import Reader.CSV;
+
 import Matrix.TableWithLabels;
 import Metrics.EuclideanDistance;
+import Reader.CSVLabeledFileReader;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,8 +26,8 @@ class KMeansTest {
 
     @BeforeEach
 
-    void setUp() throws InvalidClusterNumberException, IOException {
-        iris = new CSV().readTableWithLabels("iris.csv");
+    void setUp() throws InvalidClusterNumberException{
+        iris = new CSVLabeledFileReader("iris.csv").readTableFromSource();
         kMeans = new KMeans(irisClusters, numIterations, seed, new EuclideanDistance());
         kMeans.train(iris);
     }

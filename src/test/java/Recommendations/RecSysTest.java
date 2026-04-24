@@ -2,9 +2,9 @@ package Recommendations;
 
 
 import Algorithms.*;
-import Reader.CSV;
 import Matrix.Table;
 import Metrics.EuclideanDistance;
+import Reader.CSVLabeledFileReader;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
@@ -45,8 +45,8 @@ class RecSysTest {
 
         @BeforeEach
         void setUp() throws IOException, URISyntaxException {
-            trainTable = new CSV().readTableWithLabels(songsFolder + separator + "songs_train.csv");
-            testTable = new CSV().readTableWithLabels(songsFolder + separator + "songs_test.csv");
+            trainTable = new CSVLabeledFileReader(songsFolder + separator + "songs_train.csv").readTableFromSource();
+            testTable = new CSVLabeledFileReader(songsFolder + separator + "songs_test.csv").readTableFromSource();
             testItemNames = readNames(songsFolder + separator + "songs_test_names.csv");
 
             algorithm = new KNN(new EuclideanDistance());
@@ -93,8 +93,8 @@ class RecSysTest {
 
         @BeforeEach
         void setUp() throws IOException, URISyntaxException {
-            trainTable = new CSV().readTableWithLabels(songsFolder + separator + "songs_train_withoutnames.csv");
-            testTable = new CSV().readTableWithLabels(songsFolder + separator + "songs_test_withoutnames.csv");
+            trainTable = new CSVLabeledFileReader(songsFolder + separator + "songs_train_withoutnames.csv").readTableFromSource();
+            testTable = new CSVLabeledFileReader(songsFolder + separator + "songs_test_withoutnames.csv").readTableFromSource();
             testItemNames = readNames(songsFolder + separator + "songs_test_names.csv");
 
             algorithm = new KMeans(numClusters, numIterations, seed, new EuclideanDistance());
