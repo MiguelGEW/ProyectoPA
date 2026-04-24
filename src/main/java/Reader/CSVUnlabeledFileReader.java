@@ -7,33 +7,23 @@ import java.util.List;
 
 public class CSVUnlabeledFileReader extends FileReader<Table> {
 
-    private static final String SEPARATOR = ",";
-
     public CSVUnlabeledFileReader(String source) {
         super(source);
     }
 
     @Override
     void processHeaders(String headers) {
-        String[] tokens = headers.split(SEPARATOR);
+        String[] tokens = headers.split(",");
         List<String> headerList = new ArrayList<>();
-
-        for (String token : tokens) {
-            headerList.add(token.strip());
-        }
-
+        for (String t : tokens) headerList.add(t.strip());
         this.table = new Table(headerList);
     }
 
     @Override
     void processData(String data) {
-        String[] tokens = data.split(SEPARATOR);
+        String[] tokens = data.split(",");
         List<Double> values = new ArrayList<>();
-
-        for (String token : tokens) {
-            values.add(Double.parseDouble(token.strip()));
-        }
-
+        for (String t : tokens) values.add(Double.parseDouble(t.strip()));
         this.table.addRow(new Row(values));
     }
 }

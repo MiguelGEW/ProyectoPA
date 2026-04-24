@@ -3,8 +3,9 @@ package Reader;
 import Matrix.Table;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URL;
+import java.net.URISyntaxException;
 import java.util.Scanner;
-
 
 public abstract class FileReader<T extends Table> extends ReaderTemplate<T> {
 
@@ -17,9 +18,15 @@ public abstract class FileReader<T extends Table> extends ReaderTemplate<T> {
     @Override
     void openSource(String source) {
         try {
-            this.scanner = new Scanner(new File(source));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("No se ha podido abrir el archivo: " + source, e);
+
+            URL resource = getClass().getClassLoader().getResource(source);
+            if (resource == null) {
+                throw new IllegalArgumentException("File not found: " + source);
+            }
+            String filePath = resource.toURI().getPath();
+            this.scanner = new Scanner(new File(filePath));
+        } catch (URISyntaxException | FileNotFoundException e) {
+            throw new RuntimeException("Error opening file: " + source, e);
         }
     }
 
@@ -37,9 +44,6 @@ public abstract class FileReader<T extends Table> extends ReaderTemplate<T> {
 
     @Override
     String getNextData() {
-        if (this.scanner != null && this.scanner.hasNextLine()) {
-            return this.scanner.nextLine();
-        }
-        return null;
+        return this.scanner.nextLine();
     }
 }

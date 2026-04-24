@@ -2,22 +2,20 @@ package Reader;
 
 import Matrix.Table;
 
-
-
 public abstract class ReaderTemplate<T extends Table> {
 
-    //Protegido para que las subclases instancien y rellenen la tabla.
     protected T table;
-    private String source;
+    protected String source;
+
     public ReaderTemplate(String source) {
         this.source = source;
     }
 
     public final T readTableFromSource() {
-
         openSource(source);
 
         try {
+
             if (hasMoreData()) {
                 String headers = getNextData();
                 processHeaders(headers);
@@ -28,8 +26,10 @@ public abstract class ReaderTemplate<T extends Table> {
                 processData(data);
             }
         } finally {
+
             closeSource();
         }
+
         return table;
     }
 
