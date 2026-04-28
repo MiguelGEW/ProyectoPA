@@ -99,3 +99,16 @@
 
 **Unit Tests**
 -[X] `TestSuite`
+
+## Assignment 4: Graphical interfaces
+
+### MVC pattern design
+
+**View**
+
+
+**Model**
+
+
+**Controller**
+

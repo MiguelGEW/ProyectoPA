@@ -39,6 +39,7 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
+       
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-launcher</artifactId>
@@ -55,6 +56,26 @@
             <version>5.8.2</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>27-ea+14</version>
+        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <executable>${java.home}/bin/java</executable>
+                    <mainClass>TU CLASE JAVAFX</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
