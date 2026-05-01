@@ -7,65 +7,70 @@ import AuraApp.BackEnd.Matrix.Table;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecSys {
-    // TODO: Cuidado porque la declaración rompe la abstracción genérica, ya que KNN trabajo con TableWithLabels
-    // TODO: Funciona por el uso de los tipos raw en los tests, pero el diseño es inseguro
-    // TODO: Por lo tanto, debéis parametrizar RecSys con los mismos genéricos de Algorithm o aceptar un tipo más general pero bien acotado
+public class RecSys<T extends Table> {
 
-    // Usar el tipo genérico sin especificar para que acepte tanto KNN (TableWithLabels) como KMeans (Table)
-    private Algorithm<Table,List<Double>,Integer> algorithm;
 
-    // Nombres y sus clases/grupos estimados
+    private Algorithm<T, List<Double>, Integer> algorithm;
     private List<String> testItemNames;
     private List<Integer> estimatedClasses;
 
-    public RecSys(Algorithm<Table,List<Double>,Integer>  algorithm) {
+    public RecSys(Algorithm<T, List<Double>, Integer> algorithm) {
         this.algorithm = algorithm;
     }
 
-    public void train(Table trainData) throws InvalidClusterNumberException {
+    public void train(T trainData) {
         // Algoritmo inyectado (KNN o KMeans)
         algorithm.train(trainData);
     }
 
-    public void initialise(Table testData, List<String> testItemNames) {
+    public void initialise(T testData, List<String> testItemNames) {
 
         if (testData.getRows().size() != testItemNames.size())
             throw new IllegalArgumentException("no coincide el número de datos y sus etiquetas");
+
         this.testItemNames = testItemNames;
         this.estimatedClasses = new ArrayList<>();
 
         for (int i = 0; i < testData.getRowCount(); i++) {
             List<Double> rowData = testData.getRowAt(i).getData();
-            Integer estimatedClass =  algorithm.estimate(rowData);
+            Integer estimatedClass = algorithm.estimate(rowData);
             this.estimatedClasses.add(estimatedClass);
         }
     }
-    // TODO: Para hacer que los métodos sean más compactos, podéis distribuir la lógica en varios métodos (búsqueda del ítem, obtención de clase objetivo y filtrado de recomendaciones)
 
     public List<String> recommend(String nameLikedItem, int numRecommendations) throws LikedItemNotFoundException {
 
-        // Buscar el elemento que le gusta al usuario
-        int itemIndex = testItemNames.indexOf(nameLikedItem);
+        int itemIndex = findItemIndex(nameLikedItem);
+        Integer likedItemClass = getTargetClass(itemIndex);
 
+        return filterRecommendations(itemIndex, likedItemClass, numRecommendations);
+    }
+
+
+    private int findItemIndex(String nameLikedItem) throws LikedItemNotFoundException {
+        int itemIndex = testItemNames.indexOf(nameLikedItem);
         if (itemIndex == -1) {
             throw new LikedItemNotFoundException(nameLikedItem);
         }
+        return itemIndex;
+    }
 
-        // Obtener la clase/grupo del ítem
-        Integer likedItemClass = estimatedClasses.get(itemIndex);
 
-        // Buscar otros elementos
+    private Integer getTargetClass(int itemIndex) {
+        return estimatedClasses.get(itemIndex);
+    }
+
+
+    private List<String> filterRecommendations(int itemIndex, Integer targetClass, int numRecommendations) {
         List<String> recommendations = new ArrayList<>();
 
         for (int i = 0; i < estimatedClasses.size(); i++) {
-
             if (i == itemIndex) {
                 continue;
             }
 
             // Si la clase precalculada coincide con la clase del elemento que nos gusta
-            if (estimatedClasses.get(i).equals(likedItemClass)) {
+            if (estimatedClasses.get(i).equals(targetClass)) {
                 recommendations.add(testItemNames.get(i));
 
                 if (recommendations.size() == numRecommendations) {

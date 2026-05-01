@@ -1,18 +1,21 @@
 package AuraApp.BackEnd.Algorithms;
 
-public class InvalidClusterNumberException extends Exception {
+public class InvalidClusterNumberException extends RuntimeException {
 
-    private final int numberOfClusters;
+    private final int numClusters;
     private final int totalDataSize;
 
-    public InvalidClusterNumberException(int numberOfClusters, int totalDataSize) {
-        super("El número de clusters (" + numberOfClusters + ") no puede ser mayor que el número de datos (" + totalDataSize + ").");
-        this.numberOfClusters = numberOfClusters;
+    public InvalidClusterNumberException(int numClusters, int totalDataSize) {
+        super("Número inválido de clústeres: se solicitaron " + numClusters + ", pero solo hay " + totalDataSize + " datos disponibles.");
+        this.numClusters = numClusters;
         this.totalDataSize = totalDataSize;
     }
 
-    //Getters útiles
     public int getNumberOfClusters() {
-        return numberOfClusters;
+        return numClusters;
+    }
+
+    public int getTotalDataSize() {
+        return totalDataSize;
     }
 }

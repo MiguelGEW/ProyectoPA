@@ -18,15 +18,13 @@ public abstract class FileReader<T extends Table> extends ReaderTemplate<T> {
     @Override
     void openSource(String source) {
         try {
-
             URL resource = getClass().getClassLoader().getResource(source);
             if (resource == null) {
                 throw new IllegalArgumentException("File not found: " + source);
             }
-            // TODO: La abertura del recurso convierte la URL a path manualmente lo que puede dar errores en Windows o con espacios / caracteres codificados
-            // TODO: Para cumplir mejor la portabilidad, conviene construir el fichero desde resources.toURI()
-            String filePath = resource.toURI().getPath();
-            this.scanner = new Scanner(new File(filePath));
+
+            this.scanner = new Scanner(new File(resource.toURI()));
+
         } catch (URISyntaxException | FileNotFoundException e) {
             throw new RuntimeException("Error opening file: " + source, e);
         }

@@ -7,24 +7,30 @@ import java.util.List;
 
 public class CSVUnlabeledFileReader extends FileReader<Table> {
 
+    private static final String SEPARATOR = ",";
+
     public CSVUnlabeledFileReader(String source) {
         super(source);
     }
-    // TODO: Hay lógica repetida de troceado y limpieza de tokens
-    // TODO: Se podrían extraer utilidades comunes para mejorar la reutilización y reducir el duplicado
+
+    private List<String> splitAndClean(String line) {
+        String[] tokens = line.split(SEPARATOR);
+        List<String> cleanTokens = new ArrayList<>();
+        for (String t : tokens) cleanTokens.add(t.strip());
+        return cleanTokens;
+    }
+
     @Override
     void processHeaders(String headers) {
-        String[] tokens = headers.split(",");
-        List<String> headerList = new ArrayList<>();
-        for (String t : tokens) headerList.add(t.strip());
-        this.table = new Table(headerList);
+        this.table = new Table(splitAndClean(headers));
     }
 
     @Override
     void processData(String data) {
-        String[] tokens = data.split(",");
+        List<String> tokens = splitAndClean(data);
         List<Double> values = new ArrayList<>();
-        for (String t : tokens) values.add(Double.parseDouble(t.strip()));
+
+        for (String token : tokens) values.add(Double.parseDouble(token));
         this.table.addRow(new Row(values));
     }
 }

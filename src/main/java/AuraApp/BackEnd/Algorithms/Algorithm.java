@@ -9,15 +9,10 @@ import AuraApp.BackEnd.Matrix.Table;
  * @param <V> Tipo del valor devuelto en la estimación
  */
 
-// El method train puede lanzar excepciones concretas de los algoritmos
-
 public interface Algorithm<T extends Table, U, V> {
 
-    // TODO: La interfaz obliga a que cualquier algoritmo pueda lanzar InvalidClusterNumberException, aunque eso solo tiene sentido para KMeans
-    // TODO: Esto penaliza en el diseño, lo recomendable es no declarar la excepción en la interfaz común o rediseñar la jerarquía para no imponer excepciones específicas a todos los algoritmos
-
     // El method train puede lanzar excepciones concretas de los algoritmos
-    void train(T datos) throws InvalidClusterNumberException;
+    void train(T datos);
 
     V estimate(U dato);
 }

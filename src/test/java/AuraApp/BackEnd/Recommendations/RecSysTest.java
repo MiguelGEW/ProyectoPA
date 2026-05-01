@@ -25,6 +25,7 @@ class RecSysTest {
 
     private String songsFolder = "recsys/songs_files";
 
+    //Utiliza los RAW types. Si queremos utilizar correctamente la clase parametrizada debemos modificar el test, pero no es necesario.
     private RecSys recSys;
     private Algorithm algorithm;
 

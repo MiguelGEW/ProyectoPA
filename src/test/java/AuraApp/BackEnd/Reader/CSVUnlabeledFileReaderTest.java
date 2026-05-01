@@ -24,7 +24,6 @@ class CSVUnlabeledFileReaderTest {
         reader = null;
     }
 
-    // TODO: Dependiendo de cómo manejas las excepciones, puedes añadir un try/catch o un lanzamiento de excepción aquí.
     @Test
     void readTableFromSource() {
         Table table = reader.readTableFromSource();

@@ -7,30 +7,38 @@ import java.util.List;
 
 public class CSVLabeledFileReader extends FileReader<TableWithLabels> {
 
+    private static final String SEPARATOR = ",";
+
     public CSVLabeledFileReader(String source) {
         super(source);
     }
-    // TODO: Hay lógica repetida de troceado y limpieza de tokens
-    // TODO: Se podrían extraer utilidades comunes para mejorar la reutilización y reducir el duplicado
+
+    private List<String> splitAndClean(String line) {
+        String[] tokens = line.split(SEPARATOR);
+        List<String> cleanTokens = new ArrayList<>();
+
+        for (String t : tokens) cleanTokens.add(t.strip());
+        return cleanTokens;
+    }
+
     @Override
     void processHeaders(String headers) {
-        String[] tokens = headers.split(",");
-        List<String> headerList = new ArrayList<>();
-
-        for (int i = 0; i < tokens.length - 1; i++) {
-            headerList.add(tokens[i].strip());
-        }
+        List<String> tokens = splitAndClean(headers);
+        List<String> headerList = new ArrayList<>(tokens.subList(0, tokens.size() - 1));
         this.table = new TableWithLabels(headerList);
     }
 
     @Override
     void processData(String data) {
-        String[] tokens = data.split(",");
+        List<String> tokens = splitAndClean(data);
         List<Double> values = new ArrayList<>();
-        for (int i = 0; i < tokens.length - 1; i++) {
-            values.add(Double.parseDouble(tokens[i].strip()));
+        int lastIndex = tokens.size() - 1;
+
+        for (int i = 0; i < lastIndex; i++) {
+            values.add(Double.parseDouble(tokens.get(i)));
         }
-        String label = tokens[tokens.length - 1].strip();
+        String label = tokens.get(lastIndex);
+
         this.table.addRow(new RowWithLabel(values, label));
     }
 }
