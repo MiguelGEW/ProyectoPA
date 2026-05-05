@@ -1,5 +1,8 @@
 package AuraApp.FrontEnd;
 
+import AuraApp.BackEnd.Matrix.Table;
+import AuraApp.BackEnd.Reader.CSVLabeledFileReader;
+import AuraApp.MiddleEnd.CSVNamesReader;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -9,6 +12,12 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image; // Importante para el logo
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.List;
+
+import static java.io.File.separator;
 
 public class Aura extends Application {
 
@@ -22,7 +31,7 @@ public class Aura extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException, URISyntaxException {
         // --- 1. AÑADIR EL LOGO EN LA BARRA DE TÍTULO ---
         // El archivo debe estar en src/main/resources/Aura.png
         try {
@@ -35,7 +44,7 @@ public class Aura extends Application {
         root.setStyle("-fx-background-color: " + BACKGROUND_COLOR + ";");
         root.setPadding(new Insets(20));
 
-        // --- BARRA IZQUIERDA ---
+        /// --- BARRA IZQUIERDA ---
         VBox leftPane = new VBox(15);
         leftPane.setPadding(new Insets(0, 20, 0, 0));
         leftPane.setAlignment(Pos.TOP_CENTER);
@@ -45,10 +54,17 @@ public class Aura extends Application {
         labelChooseSong.setStyle("-fx-text-fill: " + TEXT_COLOR + "; -fx-font-weight: bold;");
 
         ListView<String> songList = new ListView<>();
-        songList.setItems(FXCollections.observableArrayList(
-                "You Belong With Me", "DEVASTATED", "The Weekend", "Techno only", "Liquid Swords"
-        ));
-        // Estilo de la lista con texto verde
+
+        //---PANEL IZQUIERDA---
+        // 1. CARGAR DATOS DEL CSV
+        // Aquí llamarías a tu clase FileReader del backend. Por ahora, usamos un método simulado.
+
+
+        String separator = System.getProperty("file.separator");
+        String songsFolder = "recsys/songs_files";
+        List<String> cancionesDesdeCSV = CSVNamesReader.readNames(songsFolder +separator + "songs_test_names.csv");
+        songList.setItems(FXCollections.observableArrayList(cancionesDesdeCSV));
+
         songList.setStyle("-fx-background-color: #1a1a1a; " +
                 "-fx-border-color: " + ACCENT_COLOR + "; " +
                 "-fx-control-inner-background: #000000; " +
@@ -58,14 +74,34 @@ public class Aura extends Application {
         Button btnGetRecommendations = new Button("OBTENER RECOMENDACIONES");
         btnGetRecommendations.setMaxWidth(Double.MAX_VALUE);
         btnGetRecommendations.setStyle("-fx-background-color: " + ACCENT_COLOR + "; " +
-                "-fx-text-fill: " + BACKGROUND_COLOR + "; " + // Texto negro sobre fondo verde para contraste
+                "-fx-text-fill: " + BACKGROUND_COLOR + "; " +
                 "-fx-font-weight: bold; -fx-background-radius: 5;");
         btnGetRecommendations.setPadding(new Insets(10));
+
+        // 2. DESHABILITAR EL BOTÓN SI NO HAY NADA SELECCIONADO
+        // Esto "enlaza" la propiedad 'disable' del botón a la propiedad 'selectedItem' de la lista.
+        // Si el elemento seleccionado es nulo (isNull), el botón se deshabilita automáticamente.
+        btnGetRecommendations.disableProperty().bind(
+                songList.getSelectionModel().selectedItemProperty().isNull()
+        );
+
+        // 3. GUARDAR EL NOMBRE AL PULSAR EL BOTÓN
+        btnGetRecommendations.setOnAction(event -> {
+            // Obtenemos el elemento que está seleccionado en ese momento
+            String cancionSeleccionada = songList.getSelectionModel().getSelectedItem();
+
+            // Aquí puedes "guardarlo" o hacer lo que necesites. Por ahora lo imprimimos por consola.
+            System.out.println("Has seleccionado y guardado: " + cancionSeleccionada);
+
+            // En el futuro, aquí llamaremos al controlador:
+            // controlador.pedirRecomendaciones(cancionSeleccionada, ...);
+        });
 
         leftPane.getChildren().addAll(labelChooseSong, songList, btnGetRecommendations);
         root.setLeft(leftPane);
 
-        // --- PANEL CENTRAL ---
+
+        /// --- PANEL CENTRAL ---
         VBox centerPane = new VBox(20);
         centerPane.setPadding(new Insets(0, 0, 0, 20));
 
@@ -94,7 +130,7 @@ public class Aura extends Application {
         recTypeBox.getChildren().addAll(labelRecType, rbGenre, rbSimilarities);
 
         VBox metricBox = new VBox(10);
-        Label labelExtra = new Label("OPCIÓN EXTRA");
+        Label labelExtra = new Label("DISTANCIA");
         labelExtra.setStyle("-fx-text-fill: " + TEXT_COLOR + "; -fx-font-weight: bold;");
         ComboBox<String> metricCombo = new ComboBox<>();
         metricCombo.setItems(FXCollections.observableArrayList("Manhattan", "Euclídea"));
