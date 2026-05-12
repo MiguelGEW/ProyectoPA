@@ -1,8 +1,17 @@
 package AuraApp.FrontEnd;
 
+import AuraApp.BackEnd.Algorithms.Algorithm;
+import AuraApp.BackEnd.Algorithms.KMeans;
+import AuraApp.BackEnd.Algorithms.KNN;
+import AuraApp.BackEnd.Algorithms.LikedItemNotFoundException;
 import AuraApp.BackEnd.Matrix.Table;
+import AuraApp.BackEnd.Matrix.TableWithLabels;
+import AuraApp.BackEnd.Metrics.Distance;
+import AuraApp.BackEnd.Metrics.EuclideanDistance;
+import AuraApp.BackEnd.Metrics.ManhattanDistance;
 import AuraApp.BackEnd.Reader.CSVLabeledFileReader;
 import AuraApp.MiddleEnd.CSVNamesReader;
+import AuraApp.MiddleEnd.Recommendator;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -63,6 +72,8 @@ public class Aura extends Application {
         String separator = System.getProperty("file.separator");
         String songsFolder = "recsys/songs_files";
         List<String> cancionesDesdeCSV = CSVNamesReader.readNames(songsFolder +separator + "songs_test_names.csv");
+        TableWithLabels trainTable = new CSVLabeledFileReader(songsFolder + separator + "songs_train.csv").readTableFromSource();
+        TableWithLabels testTable = new CSVLabeledFileReader(songsFolder + separator + "songs_test.csv").readTableFromSource();
         songList.setItems(FXCollections.observableArrayList(cancionesDesdeCSV));
 
         songList.setStyle("-fx-background-color: #1a1a1a; " +
@@ -119,12 +130,12 @@ public class Aura extends Application {
         labelRecType.setStyle("-fx-text-fill: " + TEXT_COLOR + "; -fx-font-weight: bold;");
 
         ToggleGroup recTypeGroup = new ToggleGroup();
-        RadioButton rbGenre = new RadioButton("Género");
+        RadioButton rbGenre = new RadioButton("Género (KMeans)");
         rbGenre.setToggleGroup(recTypeGroup);
         rbGenre.setSelected(true);
         rbGenre.setStyle("-fx-text-fill: " + TEXT_COLOR + "; -jfx-selected-color: " + ACCENT_COLOR + ";");
 
-        RadioButton rbSimilarities = new RadioButton("Similitudes");
+        RadioButton rbSimilarities = new RadioButton("Similitudes (KNN)");
         rbSimilarities.setToggleGroup(recTypeGroup);
         rbSimilarities.setStyle("-fx-text-fill: " + TEXT_COLOR + "; -jfx-selected-color: " + ACCENT_COLOR + ";");
         recTypeBox.getChildren().addAll(labelRecType, rbGenre, rbSimilarities);
@@ -166,6 +177,8 @@ public class Aura extends Application {
         numberAndClearBox.getChildren().addAll(numRecsSpinner, btnPlus5, btnMinus5, btnClear);
         // -------------------------------------------------------------
 
+
+
         // Recomendaciones (Lista de salida)
         Label labelRecommendations = new Label("TE RECOMENDAMOS LOS SIGUIENTES TÍTULOS");
         labelRecommendations.setStyle("-fx-text-fill: " + TEXT_COLOR + "; -fx-font-weight: bold;");
@@ -181,6 +194,95 @@ public class Aura extends Application {
         // Agregamos también el numberAndClearBox al panel central
         centerPane.getChildren().addAll(labelTitle, controlsBox, numberAndClearBox, labelRecommendations, recList);
         root.setCenter(centerPane);
+
+
+
+        // --- LÓGICA DE ACTUALIZACIÓN AUTOMÁTICA (LISTENERS) ---
+
+        // Definimos una función que recoja los datos actuales y "simule" el cálculo
+        // En JavaFX, las acciones se suelen encapsular para reutilizarlas
+        Runnable lanzarCalculo = () -> {
+            String cancion = songList.getSelectionModel().getSelectedItem();
+            if (cancion != null) {
+                RadioButton selectedRB = (RadioButton) recTypeGroup.getSelectedToggle();
+                String algoritmo = selectedRB.getText();
+                String metrica = metricCombo.getValue();
+                int cantidad = numRecsSpinner.getValue();
+
+                Distance metric = ( metrica.equals("Manhattan") ? new ManhattanDistance() : new EuclideanDistance());
+
+                Algorithm algorithm = null;
+                if (algoritmo.equals("Género (KMeans)")) {
+                    algorithm = new KMeans(15,15,4331,metric);
+                } else {
+                    algorithm = new KNN(metric);
+                }
+
+                try {
+                    List<String> litaRecomendacionesActualizada = Recommendator.getRecommendations(cancion,algorithm,trainTable,testTable
+                            ,cancionesDesdeCSV,cantidad);
+
+                    recList.setItems(FXCollections.observableArrayList(litaRecomendacionesActualizada));
+
+                } catch (LikedItemNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+
+
+
+
+                // Simulación del cálculo para pruebas (Print)
+                System.out.println("\n[EJECUTANDO RECOMENDACIÓN]");
+                System.out.println("Canción base: " + cancion);
+                System.out.println("Estrategia: " + algoritmo);
+                System.out.println("Distancia: " + metrica);
+                System.out.println("Nº resultados: " + cantidad);
+
+                // Aquí es donde en el futuro llamarás al controlador
+                // controlador.recomendar(cancion, algoritmo, metrica, cantidad);
+            }
+        };
+
+        // 1. El botón principal dispara el cálculo
+        btnGetRecommendations.setOnAction(e -> lanzarCalculo.run());
+
+        // 2. Listener para el cambio de Algoritmo (RadioButtons)
+        recTypeGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                System.out.println("Cambio de algoritmo detectado...");
+                lanzarCalculo.run();
+            }
+        });
+
+        // 3. Listener para el cambio de Métrica (ComboBox)
+        metricCombo.valueProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("Cambio de métrica detectado...");
+            lanzarCalculo.run();
+        });
+
+        // 4. Listener para el cambio de Cantidad (Spinner)
+        numRecsSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("Cambio de cantidad detectado...");
+            lanzarCalculo.run();
+        });
+
+        // --- LÓGICA DE LOS BOTONES +5 y -5 ---
+        btnPlus5.setOnAction(e -> {
+            int current = numRecsSpinner.getValue();
+            numRecsSpinner.getValueFactory().setValue(Math.min(current + 5, 50));
+            // El listener del spinner ya se encargará de llamar a lanzarCalculo
+        });
+
+        btnMinus5.setOnAction(e -> {
+            int current = numRecsSpinner.getValue();
+            numRecsSpinner.getValueFactory().setValue(Math.max(current - 5, 1));
+        });
+
+        // Lógica para el botón Borrar
+        btnClear.setOnAction(e -> {
+            recList.getItems().clear();
+            System.out.println("Lista de recomendaciones limpiada.");
+        });
 
         Scene scene = new Scene(root, 1000, 700);
         primaryStage.setTitle("Aura");
