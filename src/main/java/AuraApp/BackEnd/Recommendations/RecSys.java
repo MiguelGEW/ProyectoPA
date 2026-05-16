@@ -1,13 +1,13 @@
 package AuraApp.BackEnd.Recommendations;
 
 import AuraApp.BackEnd.Algorithms.Algorithm;
-import AuraApp.BackEnd.Algorithms.InvalidClusterNumberException;
 import AuraApp.BackEnd.Algorithms.LikedItemNotFoundException;
 import AuraApp.BackEnd.Matrix.Table;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecSys<T extends Table> {
+public class RecSys<T extends Table>{
 
 
     private Algorithm<T, List<Double>, Integer> algorithm;
