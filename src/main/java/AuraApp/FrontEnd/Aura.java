@@ -1,5 +1,5 @@
 package AuraApp.FrontEnd;
-import AuraApp.BackEnd.ImplementedModel;
+import AuraApp.BackEnd.BackModel.ImplementedModel;
 import AuraApp.BackEnd.Matrix.TableWithLabels;
 
 import AuraApp.BackEnd.Reader.CSVLabeledFileReader;
@@ -12,14 +12,12 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import static java.io.File.separator;
-
 public class Aura extends Application {
 
     // Definición de colores
     private final String BACKGROUND_COLOR = "#000000";
-    private final String ACCENT_COLOR = "#01ff95";    // El verde que te gusta
-    private final String TEXT_COLOR = "#01ff95";       // Ahora el texto también es verde
+    private final String ACCENT_COLOR = "#01ff95";    // El verde
+    private final String TEXT_COLOR = "#01ff95";       // El texto también es verde
 
     public static void main(String[] args) {
         launch(args);

@@ -1,4 +1,4 @@
-package AuraApp.BackEnd;
+package AuraApp.BackEnd.BackModel;
 
 import AuraApp.BackEnd.Algorithms.LikedItemNotFoundException;
 

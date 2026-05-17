@@ -4,7 +4,7 @@ package AuraApp.MiddleEnd;
 import AuraApp.BackEnd.Algorithms.Algorithm;
 import AuraApp.BackEnd.Algorithms.LikedItemNotFoundException;
 
-import AuraApp.BackEnd.ModelChange;
+import AuraApp.BackEnd.BackModel.ModelChange;
 
 import AuraApp.FrontEnd.AskView;
 

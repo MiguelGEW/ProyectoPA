@@ -1,17 +1,12 @@
-package AuraApp.BackEnd;
+package AuraApp.BackEnd.BackModel;
 
 import AuraApp.BackEnd.Algorithms.Algorithm;
 import AuraApp.BackEnd.Algorithms.LikedItemNotFoundException;
 import AuraApp.BackEnd.Matrix.TableWithLabels;
-import AuraApp.BackEnd.Reader.CSVLabeledFileReader;
 import AuraApp.BackEnd.Recommendations.RecSys;
 import AuraApp.FrontEnd.InformView;
-import AuraApp.MiddleEnd.CSVNamesReader;
-import javafx.collections.FXCollections;
 
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 
 public class ImplementedModel implements AskModel, ModelChange {

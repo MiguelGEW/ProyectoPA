@@ -104,11 +104,20 @@
 
 ### MVC pattern design
 
-**View**
+**View: FrontEnd**
+- [X] `Aura` main class created
+- [X] `AskView` interface created
+- [X] `InformView` interface created
+- [X] `ImplementedView` class created
 
+**Model: BackEnd**
+- [X] `Algorithms`, `Matrix`, `Metrics`, `Reader`, `Recommendations` packages added
+- [X] `BackModel` package created
+- [X] `AskModel` interface created
+- [X] `ModelChange` interface created
+- [X] `ImplementedModel` class created
 
-**Model**
-
-
-**Controller**
-
+**Controller: MiddleEnd**
+- [X] `Controller` interface created
+- [X] `CSVNamesReader` class created
+- [X] `ImplementedController` class created
